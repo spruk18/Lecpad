@@ -8,7 +8,8 @@
     <string name="pw">Password</string>
     <string name="login">login</string>
     <string name="siteurl">http://www.highoctane-restobar.com/lecpad/auth.php</string>
-    <string name="action_example">Example action</string>
+    <string name="about">About</string>
+    <string name="settings">Settings</string>
     <string-array name="studentmenu">
         <item>Library</item>
         <item>Messages</item>
@@ -25,5 +26,9 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="action_websearch">Web search</string>
     <string name="app_not_available">Sorry, there\'s no web browser available</string>
+
+    <string name="user_login_key">user</string>
+    <string name="user_login_default">User</string>
+
 
 </resources>

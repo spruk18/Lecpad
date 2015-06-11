@@ -87,6 +87,7 @@ public class Login extends Activity {
                // Toast.makeText(getApplicationContext(),"Logged",Toast.LENGTH_LONG).show();
                 if(stat.equals("student"))
                 {
+                    Utility.savePreferences(getApplicationContext(),getString(R.string.user_login_key),us.getText().toString());
                     Intent i = new Intent(Login.this,StudentMainActivity.class);
                     startActivity(i);
                 }

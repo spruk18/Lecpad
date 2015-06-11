@@ -1,6 +1,5 @@
 package com.spruk.lecpad;
 
-
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ListFragment;
@@ -13,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -32,17 +30,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by taray on 6/9/201   5.
+ * Created by taray on 6/11/2015.
  */
-public class StudentLibraryFragment  extends ListFragment {
+public class SubjectLectureFragment extends ListFragment {
 
     private ProgressDialog progress;
     private boolean connectivityOk;
     private List<String> subjectcode = new ArrayList<String>();
     private List<Integer> subjid = new ArrayList<Integer>();
+    List<SubjectList> data = new ArrayList<SubjectList>();
 
-
-    public StudentLibraryFragment()
+    public SubjectLectureFragment()
     {
 
     }
@@ -50,8 +48,13 @@ public class StudentLibraryFragment  extends ListFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        int i=0;
 
-
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+             i = bundle.getInt("subjid", 0);
+        }
+      //Toast.makeText(getActivity()," " + i,Toast.LENGTH_LONG).show();
         connectivityOk = checkInternetConnection();
         if(connectivityOk)
         {
@@ -63,19 +66,19 @@ public class StudentLibraryFragment  extends ListFragment {
 
 
             GetSubjectInfo client = new GetSubjectInfo();
-            String uid = Utility.loadSavedPreferences(getActivity(),getString(R.string.user_login_key));
-            client.execute(getString(R.string.siteurl) + "?action=getstudentsubject&uid=" + uid);
+
+            client.execute(getString(R.string.siteurl) + "?action=getsubjectlecture&subjid=" + i);
 
 
         }
         else
         {
-            Toast.makeText(getActivity(),"No Connection",Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "No Connection", Toast.LENGTH_LONG).show();
         }
 
 
 
-        View rootView = inflater.inflate(R.layout.student_library_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.subject_lecture_fragment, container, false);
 
 
         return rootView;
@@ -84,14 +87,9 @@ public class StudentLibraryFragment  extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         // TODO Auto-generated method stub
-//        String msg = Utility.loadSavedPreferences(getActivity(),getString(R.string.user_login_key));
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("subjid", subjid.get(position));
 
 
-        Fragment fragment = new SubjectLectureFragment();
-        fragment.setArguments(bundle);
+        Fragment fragment = new WebViewFragment();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
@@ -106,10 +104,9 @@ public class StudentLibraryFragment  extends ListFragment {
         protected void onPostExecute(JSONArray jsonArray) {
             super.onPostExecute(jsonArray);
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, subjectcode);
-            setListAdapter(adapter);
-
-
+          //  ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, subjectcode);
+          //  setListAdapter(adapter);
+            setListAdapter(new SubjectListCustomAdapter(getActivity(),data));
             progress.dismiss();
 
 
@@ -138,10 +135,17 @@ public class StudentLibraryFragment  extends ListFragment {
 
                         for (int i = 0; i < jsonMainNode.length(); i++) {
                             JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
-                           //Log.v("gigi pogi", jsonChildNode.optString("subjectcode") + "haha");
-                           subjectcode.add(jsonChildNode.optString("subjectcode"));
-                           subjid.add(Integer.parseInt(jsonChildNode.optString("subjid")));
 
+                            //Log.v("gigi pogi", jsonChildNode.optString("subjectcode") + "haha");
+                            subjectcode.add(jsonChildNode.optString("title"));
+                            int id = Integer.parseInt(jsonChildNode.optString("subjid"));
+                            String sub = jsonChildNode.optString("subjectcode");
+                            String ddate = jsonChildNode.optString("ddate");
+                            String title = jsonChildNode.optString("title");
+                            String content = jsonChildNode.optString("content");
+                            String uploadedfile = jsonChildNode.optString("uploadedfile");
+                            data.add(new SubjectList(id,sub,ddate,title,content, uploadedfile));
+                           // subjid.add(Integer.parseInt(jsonChildNode.optString("subjid")));
 
                         }
                     } catch (JSONException e) {
