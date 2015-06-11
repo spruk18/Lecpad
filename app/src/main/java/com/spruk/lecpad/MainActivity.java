@@ -4,9 +4,17 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 
 public class MainActivity extends Activity {
+    Button btnLogin;
+    EditText txtUs;
+    EditText txtPw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
