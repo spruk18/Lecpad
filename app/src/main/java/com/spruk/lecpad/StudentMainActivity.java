@@ -156,7 +156,17 @@ public class StudentMainActivity  extends Activity {
             setTitle("Library");
             mDrawerLayout.closeDrawer(mDrawerList);
         }
-        else if(position==3)
+        else if(position==1)
+        {
+            Fragment fragment = new StudentSubjectFragment();
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame,fragment).commit();
+            mDrawerList.setItemChecked(position,true);
+            setTitle("Subjects");
+            mDrawerLayout.closeDrawer(mDrawerList);
+
+        }
+        else if(position==4)
         {
             Intent i = new Intent(getApplicationContext(),Login.class);
             startActivity(i);

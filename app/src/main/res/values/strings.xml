@@ -8,10 +8,12 @@
     <string name="pw">Password</string>
     <string name="login">login</string>
     <string name="siteurl">http://www.highoctane-restobar.com/lecpad/auth.php</string>
+    <string name="webview">http://www.highoctane-restobar.com/lecpad/webview.php</string>
     <string name="about">About</string>
     <string name="settings">Settings</string>
     <string-array name="studentmenu">
         <item>Library</item>
+        <item>Subjects</item>
         <item>Messages</item>
         <item>Notification</item>
         <item>Logout</item>
@@ -30,5 +32,6 @@
     <string name="user_login_key">user</string>
     <string name="user_login_default">User</string>
 
+    <string name="content_authority">com.spruk.lecpad</string>
 
 </resources>

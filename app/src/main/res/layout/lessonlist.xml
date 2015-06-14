@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout1"
-        android:layout_width="350dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:gravity="left|center"
         android:orientation="vertical"
@@ -31,12 +31,12 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/bookmark"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:padding="5dp"
-        android:src="@drawable/ic_drawer" />
+    <ImageButton
+        android:id="@+id/btn_attachment"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/ic_attachment" />
 
 
 

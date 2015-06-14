@@ -21,7 +21,16 @@ public class WebViewFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.webview,container,false);
         webview = (WebView) rootView.findViewById(R.id.webView);
 
-        webview.loadUrl("http://www.mathportal.org/");
+        int i=0;
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            i = bundle.getInt("subjid", 0);
+        }
+
+
+        webview.loadUrl(getString(R.string.webview)+"?lecid="+i);
+       // Toast.makeText(getActivity(),"wtf " + getString(R.string.webview)+"?lecid="+i ,Toast.LENGTH_SHORT).show();
         return rootView;
     }
 }
