@@ -21,7 +21,7 @@ public class LibraryDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         final String SQL_CREATE_LIBRARY_TABLE = "CREATE TABLE " + LibraryContract.LibraryEntry.TABLE_NAME + " (" +
-                LibraryContract.LibraryEntry._ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                LibraryContract.LibraryEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 LibraryContract.LibraryEntry.COLUMN_FILENAME + " TEXT NOT NULL, " +
                 LibraryContract.LibraryEntry.COLUMN_FILE_PATH + " TEXT NOT NULL, " +
                 LibraryContract.LibraryEntry.COLUMN_ICON_TYLE + " TEXT NOT NULL, " +

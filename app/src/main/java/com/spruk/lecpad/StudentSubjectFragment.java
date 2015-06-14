@@ -35,6 +35,8 @@ import java.util.List;
  * Created by taray on 6/9/201   5.
  */
 public class StudentSubjectFragment extends ListFragment {
+    private static final String LOG_TAG = StudentSubjectFragment.class.getSimpleName();
+
 
     private ProgressDialog progress;
     private boolean connectivityOk;

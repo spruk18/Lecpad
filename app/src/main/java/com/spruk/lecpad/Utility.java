@@ -22,6 +22,23 @@ public class Utility {
         editor.commit();
 
     }
+    public static String getFileExtension(String filename)
+    {
+        String filenameArray[] = filename.split("\\.");
+        String extension = filenameArray[filenameArray.length-1];
+        switch(extension)
+        {
+            case "docx":
+                return "doc";
+            case "pptx":
+                return "ppt";
+            default:
+                return extension;
+
+        }
+
+
+    }
     public static String loadSavedPreferences(Context context,String key) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String name = sharedPreferences.getString(key, "studus");

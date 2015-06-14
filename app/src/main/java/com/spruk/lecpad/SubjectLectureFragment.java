@@ -4,10 +4,15 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ListFragment;
 import android.app.ProgressDialog;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,17 +24,24 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.spruk.lecpad.data.LibraryContract;
+
 import org.apache.http.HttpStatus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,12 +49,18 @@ import java.util.List;
  * Created by taray on 6/11/2015.
  */
 public class SubjectLectureFragment extends ListFragment {
+    private static final String LOG_TAG = SubjectLectureFragment.class.getSimpleName();
 
     private ProgressDialog progress;
     private boolean connectivityOk;
     private List<String> subjectcode = new ArrayList<String>();
     private List<Integer> subjid = new ArrayList<Integer>();
     List<SubjectList> data = new ArrayList<SubjectList>();
+
+    private ProgressDialog pDialog;
+    public static final int progress_bar_type = 0;
+    String file_url;
+    String file_name;
 
     public SubjectLectureFragment()
     {
@@ -194,10 +212,130 @@ public class SubjectLectureFragment extends ListFragment {
         public void onClick(View v) {
             final int position = getListView().getPositionForView(v);
             if (position != ListView.INVALID_POSITION) {
-                Toast.makeText(getActivity(),data.get(position).getUploadedfile() + "",Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity(),data.get(position).getUploadedfile() + "",Toast.LENGTH_LONG).show();
+                file_url = getString(R.string.docs) + "/" + data.get(position).getUploadedfile();
+                file_name = data.get(position).getUploadedfile();
+                new DownloadFileFromURL().execute(file_url);
             }
         }
     };
+
+
+
+    class DownloadFileFromURL extends AsyncTask<String, String, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(getActivity());
+            pDialog.setMessage("Downloading file. Please wait...");
+            pDialog.setIndeterminate(false);
+            pDialog.setMax(100);
+            pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        }
+
+
+        @Override
+        protected String doInBackground(String... f_url) {
+            int count;
+            try {
+                URL url = new URL(f_url[0]);
+                URLConnection conection = url.openConnection();
+                conection.connect();
+
+                int lenghtOfFile = conection.getContentLength();
+                InputStream input = new BufferedInputStream(url.openStream(), 8192);
+
+                File folder = new File(Environment.getExternalStorageDirectory().toString() + "/lecpad");
+                boolean success = true;
+                if (!folder.exists()) {
+                    success = folder.mkdir();
+                }
+
+                OutputStream output = new FileOutputStream("/sdcard/lecpad/" + file_name);
+
+                byte data[] = new byte[1024];
+
+                long total = 0;
+
+                while ((count = input.read(data)) != -1) {
+                    total += count;
+                    publishProgress(""+(int)((total*100)/lenghtOfFile));
+                    output.write(data, 0, count);
+                }
+                output.flush();
+                output.close();
+                input.close();
+
+            } catch (Exception e) {
+                Log.e("Error: ", e.getMessage());
+            }
+
+            return null;
+        }
+
+        protected void onProgressUpdate(String... progress) {
+
+            pDialog.setProgress(Integer.parseInt(progress[0]));
+        }
+
+        @Override
+        protected void onPostExecute(String file_url) {
+
+            pDialog.dismiss();
+            String file_path = Environment.getExternalStorageDirectory().toString() + "/lecpad/" + file_name;
+
+            String us = Utility.loadSavedPreferences(getActivity(),"user");
+
+            String extension = Utility.getFileExtension(file_name);
+            long res = addLibrary(file_name,file_path,extension,us);
+            if(res==0)
+            {
+                Toast.makeText(getActivity(),"Error Downloading",Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                Toast.makeText(getActivity(),"Added to Library!",Toast.LENGTH_LONG).show();
+
+            }
+
+
+        }
+
+
+
+    }
+
+
+
+    long addLibrary(String name,String path,String doc,String us) {
+        long locationId;
+        Cursor LibraryCursor = getActivity().getContentResolver().query(LibraryContract.LibraryEntry.CONTENT_URI,
+                new String[]{LibraryContract.LibraryEntry._ID}, LibraryContract.LibraryEntry.COLUMN_FILENAME + " = ?",
+                new String[]{name},
+                null);
+
+        if (LibraryCursor.moveToFirst()) {
+            int locationIdIndex = LibraryCursor.getColumnIndex(LibraryContract.LibraryEntry._ID);
+            locationId = LibraryCursor.getLong(locationIdIndex);
+        } else {
+
+            ContentValues values = new ContentValues();
+            values.put(LibraryContract.LibraryEntry.COLUMN_FILENAME, name);
+            values.put(LibraryContract.LibraryEntry.COLUMN_FILE_PATH, path);
+            values.put(LibraryContract.LibraryEntry.COLUMN_ICON_TYLE, doc);
+            values.put(LibraryContract.LibraryEntry.COLUMN_USER, us);
+
+            Uri insertedUri = getActivity().getContentResolver().insert(LibraryContract.LibraryEntry.CONTENT_URI,values);
+            locationId = ContentUris.parseId(insertedUri);
+        }
+
+        LibraryCursor.close();
+        return locationId;
+    }
 
 
     public class GetSubjectInfo extends AsyncTask<String, String, JSONArray> {
