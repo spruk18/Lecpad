@@ -122,13 +122,14 @@ public class SubjectLectureFragment extends ListFragment {
 
         Bundle bundle = new Bundle();
         bundle.putInt("subjid", subjid.get(position));
+        bundle.putInt("lecture", 1);
+        bundle.putString("filename","");
 
         Fragment fragment = new WebViewFragment();
         fragment.setArguments(bundle);
         FragmentManager fragmentManager = getFragmentManager();
-        //fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
-        //fragmentManager.beginTransaction().add(R.id.content_frame, fragment).commit();
+
 
         super.onListItemClick(l, v, position, id);
     }
@@ -298,7 +299,8 @@ public class SubjectLectureFragment extends ListFragment {
             }
             else
             {
-                Toast.makeText(getActivity(),"Added to Library!",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Added to Library!" ,Toast.LENGTH_LONG).show();
+                Log.v(LOG_TAG, extension + " " + file_name);
 
             }
 

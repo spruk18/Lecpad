@@ -67,6 +67,10 @@ public View getView(int position, View convertView, ViewGroup parent) {
         {
             holder.ic.setImageResource(R.drawable.ic_jpg);
         }
+        else if(data.get(position).getIcon().equals("png"))
+        {
+            holder.ic.setImageResource(R.drawable.ic_png);
+        }
         holder.title.setText((CharSequence) data.get(position).getTitle());
 
 

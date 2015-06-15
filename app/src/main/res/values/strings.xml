@@ -10,6 +10,7 @@
     <string name="siteurl">http://www.highoctane-restobar.com/lecpad/auth.php</string>
     <string name="webview">http://www.highoctane-restobar.com/lecpad/webview.php</string>
     <string name="docs">http://www.highoctane-restobar.com/lecpad/docs</string>
+    <string name="googledocs">https://docs.google.com/gview?embedded=true&amp;url=</string>
     <string name="about">About</string>
     <string name="settings">Settings</string>
     <string-array name="studentmenu">

@@ -1,6 +1,7 @@
 package com.spruk.lecpad;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.spruk.lecpad.data.LibraryContract;
 
@@ -26,9 +26,18 @@ public class StudentLibraryFragment extends Fragment {
     GridView gridView;
     List<LibraryList> data = new ArrayList<LibraryList>();
 
+    @Override
+    public void onResume() {
+        //data.clear();
+        super.onResume();
+    }
+
+
+
     long queryDatabase(String us)
     {
 
+        data.clear();
         long locationId=0;
 
         Cursor LibraryCursor = getActivity().getContentResolver().query(LibraryContract.LibraryEntry.CONTENT_URI,
@@ -58,11 +67,39 @@ public class StudentLibraryFragment extends Fragment {
 
         StudentLibraryAdapter adapter = new StudentLibraryAdapter(getActivity(),data);
 
+
+        adapter.notifyDataSetChanged();
+        gridView.invalidateViews();
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Toast.makeText(getActivity(),"" + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"" + data.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+        String icon = Utility.getFileExtension(data.get(position).getTitle());
+
+        if(icon.equals("jpg") || icon.equals("png"))
+        {
+            Bundle bundle = new Bundle();
+            bundle.putString("filename",data.get(position).getTitle());
+            Fragment fragment = new ImageViewFragment();
+            fragment.setArguments(bundle);
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
+        }
+        else
+        {
+            Bundle bundle = new Bundle();
+            bundle.putInt("subjid", 0);
+            bundle.putInt("lecture", 0);
+            bundle.putString("filename",data.get(position).getTitle());
+
+            Fragment fragment = new WebViewFragment();
+            fragment.setArguments(bundle);
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
+        }
+
+
 
             }
         });
