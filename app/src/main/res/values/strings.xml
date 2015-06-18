@@ -24,6 +24,12 @@
         <item>Notification</item>
         <item>Logout</item>
     </string-array>
+    <string-array name="facultymenu">
+        <item>Subjects</item>
+        <item>Messages</item>
+        <item>Notification</item>
+        <item>Logout</item>
+    </string-array>
     <array name="nav_drawer_icons">
         <item>@drawable/ic_drawer</item>
         <item>@drawable/ic_drawer</item>

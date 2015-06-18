@@ -91,6 +91,12 @@ public class Login extends Activity {
                     Intent i = new Intent(Login.this,StudentMainActivity.class);
                     startActivity(i);
                 }
+                else if(stat.equals("faculty"))
+                {
+                    Utility.savePreferences(getApplicationContext(),getString(R.string.user_login_key),us.getText().toString());
+                    Intent i = new Intent(Login.this,FacultyMainActivity.class);
+                    startActivity(i);
+                }
             }
         }
 
