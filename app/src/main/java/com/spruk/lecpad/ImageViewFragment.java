@@ -33,11 +33,17 @@ public class ImageViewFragment extends Fragment {
     static final int DRAG = 1;
     static final int ZOOM = 2;
     int mode = NONE;
+    String filename;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.imageview,container,false);
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            filename = bundle.getString("filename");
+        }
 
         image = (ImageView) rootView.findViewById(R.id.imageView);
         image.setOnTouchListener(new View.OnTouchListener() {
@@ -46,7 +52,7 @@ public class ImageViewFragment extends Fragment {
             public boolean onTouch(View v, MotionEvent event) {
 
                 ImageView view = (ImageView) v;
-                System.out.println("matrix=" + savedMatrix.toString());
+               // System.out.println("matrix=" + savedMatrix.toString());
                 switch (event.getAction() & MotionEvent.ACTION_MASK) {
                     case MotionEvent.ACTION_DOWN:
 
@@ -106,7 +112,7 @@ public class ImageViewFragment extends Fragment {
                 point.set(x / 2, y / 2);
             }
         });
-        new DownloadImageTask(image).execute(getString(R.string.docs)+"/png-icon.png");
+        new DownloadImageTask(image).execute(getString(R.string.docs)+"/"+filename);
 
         return rootView;
     }

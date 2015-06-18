@@ -67,6 +67,19 @@ public class SubjectLectureFragment extends ListFragment {
 
     }
 
+//    @Override
+//    public void onViewCreated(View view, Bundle savedInstanceState) {
+//        ListView lv = getListView();
+//        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getActivity()," "+position,Toast.LENGTH_LONG).show();
+//            }
+//        });
+//
+//        super.onViewCreated(view, savedInstanceState);
+//    }
+
     @Override
     public void onResume() {
         subjectcode.clear();
@@ -107,18 +120,17 @@ public class SubjectLectureFragment extends ListFragment {
         }
 
 
-
         View rootView = inflater.inflate(R.layout.subject_lecture_fragment, container, false);
+
+
 
 
         return rootView;
     }
 
 
-
-    @Override
+  @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        // TODO Auto-generated method stub
 
         Bundle bundle = new Bundle();
         bundle.putInt("subjid", subjid.get(position));
@@ -132,7 +144,7 @@ public class SubjectLectureFragment extends ListFragment {
 
 
         super.onListItemClick(l, v, position, id);
-    }
+   }
 
 //    @Override
 //    public boolean onContextItemSelected(MenuItem item) {
@@ -187,16 +199,21 @@ public class SubjectLectureFragment extends ListFragment {
             holder.title.setText((CharSequence) data.get(position).getTitle());
             holder.ddate.setText("posted on :" + (CharSequence) data.get(position).getDdate());
 
+            holder.ic.setFocusable(false);
+
             if(data.get(position).getUploadedfile().equals(""))
             {
                 holder.ic.setVisibility(View.INVISIBLE);
+
             }
             else
             {
                 holder.ic.setVisibility(View.VISIBLE);
+
             }
 
             holder.ic.setOnClickListener(mBuyButtonClickListener);
+
             return convertView;
         }
 
@@ -208,6 +225,9 @@ public class SubjectLectureFragment extends ListFragment {
         }
 
     }
+
+
+
     private View.OnClickListener mBuyButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {

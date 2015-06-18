@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.spruk.taray.samplenfc.MainActivity">
     <item android:id="@+id/action_example" android:title="@string/about"
-        app:showAsAction="withText|ifRoom" />
+        app:showAsAction="never"
+        android:orderInCategory="100"/>
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+        android:orderInCategory="150" app:showAsAction="never" />
 
 </menu>
 

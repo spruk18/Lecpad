@@ -30,6 +30,12 @@ public class StudentMainActivity  extends Activity {
     private CharSequence mTitle;
     private String[] mPlanetTitles;
 
+    private final int STUDENT_LIBRARY =0;
+    private final int STUDENT_SUBJECTS =1;
+    private final int STUDENT_MESSAGES =2;
+    private final int STUDENT_NOTIFICATION =3;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,7 +153,7 @@ public class StudentMainActivity  extends Activity {
         //2 = notif
         //3 = logout
 
-        if(position == 0)
+        if(position == STUDENT_LIBRARY)
         {
             Fragment fragment = new StudentLibraryFragment();
             FragmentManager fragmentManager = getFragmentManager();
@@ -156,7 +162,7 @@ public class StudentMainActivity  extends Activity {
             setTitle("Library");
             mDrawerLayout.closeDrawer(mDrawerList);
         }
-        else if(position==1)
+        else if(position==STUDENT_SUBJECTS)
         {
             Fragment fragment = new StudentSubjectFragment();
             FragmentManager fragmentManager = getFragmentManager();
@@ -165,6 +171,26 @@ public class StudentMainActivity  extends Activity {
             setTitle("Subjects");
             mDrawerLayout.closeDrawer(mDrawerList);
 
+        }
+        else if(position==STUDENT_MESSAGES)
+        {
+            Fragment fragment = new MessageTopicFragment();
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame,fragment).commit();
+            mDrawerList.setItemChecked(position,true);
+            setTitle("Messages");
+            mDrawerLayout.closeDrawer(mDrawerList);
+
+        }
+        else if(position==STUDENT_NOTIFICATION)
+        {
+
+            Fragment fragment = new NotificationFragment();
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame,fragment).commit();
+            mDrawerList.setItemChecked(position,true);
+            setTitle("Notification");
+            mDrawerLayout.closeDrawer(mDrawerList);
         }
         else if(position==4)
         {

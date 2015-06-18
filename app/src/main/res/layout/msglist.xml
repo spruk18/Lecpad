@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/lessonliststud"
+    android:id="@+id/linearLayout1"
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:layout_gravity="fill_vertical"
     android:orientation="horizontal" >
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="300dp"
+        android:id="@+id/msglist"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="left|center"
         android:orientation="vertical"
@@ -16,14 +16,14 @@
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
         <TextView
             android:id="@+id/ddate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Medium Text"
@@ -31,14 +31,6 @@
 
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/btn_attachment"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_vertical"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:background="@drawable/ic_attachment" />
 
 
 
