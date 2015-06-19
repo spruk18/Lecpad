@@ -135,10 +135,6 @@ public class MessageTopicFragment extends ListFragment {
                             String user = Utility.loadSavedPreferences(getActivity(),getString(R.string.user_login_key));
                             asd.execute(getString(R.string.msg)+"?action=new&msgfrm="+user+"&msgto="+text.getText().toString()+"&msg="+content.getText().toString ());
 
-
-
-
-
                         }
                         else
                         {

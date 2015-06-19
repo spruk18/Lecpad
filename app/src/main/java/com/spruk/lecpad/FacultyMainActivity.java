@@ -132,12 +132,12 @@ public class FacultyMainActivity  extends Activity {
 
        if(position==FACULTY_SUBJECTS)
         {
-//            Fragment fragment = new StudentSubjectFragment();
-//            FragmentManager fragmentManager = getFragmentManager();
-//            fragmentManager.beginTransaction().replace(R.id.content_frame,fragment).commit();
-//            mDrawerList.setItemChecked(position,true);
-//            setTitle("Subjects");
-//            mDrawerLayout.closeDrawer(mDrawerList);
+            Fragment fragment = new FacultySubjectFragment();
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame,fragment).commit();
+            mDrawerList.setItemChecked(position,true);
+            setTitle("Subjects");
+            mDrawerLayout.closeDrawer(mDrawerList);
 
         }
         else if(position==FACULTY_MESSAGES)

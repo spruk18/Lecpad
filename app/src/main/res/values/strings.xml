@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Lecpad</string>
     <string name="create">New</string>
+    <string name="score">Score</string>
+    <string name="students">Students</string>
+    <string name="attachment">Attachment</string>
     <string name="hello_world">Hello world!</string>
     <string name="sendto">User</string>
     <string name="submit">Submit</string>
@@ -9,6 +12,8 @@
     <string name="us">Username</string>
     <string name="pw">Password</string>
     <string name="login">login</string>
+    <string name="ok">okay</string>
+    <string name="cancel">cancel</string>
     <string name="notif">http://highoctane-restobar.com/lecpad/notificationlist.php</string>
     <string name="msg">http://highoctane-restobar.com/lecpad/cpmessage.php</string>
     <string name="siteurl">http://www.highoctane-restobar.com/lecpad/auth.php</string>

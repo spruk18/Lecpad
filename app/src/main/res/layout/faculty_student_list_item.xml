@@ -9,29 +9,31 @@
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="0dp"
-        android:layout_weight="4"
-        android:layout_height="match_parent"
+        android:layout_weight="6"
+        android:layout_height="wrap_content"
         android:gravity="left|center"
         android:orientation="vertical"
         android:padding="5dp" >
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/txtstudname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Medium Text"
+            android:text=""
             android:textAppearance="?android:attr/textAppearanceMedium" />
-        <TextView
-            android:id="@+id/ddate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+
 
     </LinearLayout>
-
+    <TextView
+        android:id="@+id/txtscore"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:text="99"
+        android:textIsSelectable="false"
+        android:textSize="30sp" />
     <ImageButton
         android:id="@+id/btn_attachment"
         android:layout_width="0dp"
