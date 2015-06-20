@@ -37,11 +37,15 @@ public class WebViewFragment extends Fragment {
             Toast.makeText(getActivity(),getString(R.string.webview)+"?lecid="+i,Toast.LENGTH_LONG).show();
             Log.v(LOG_TAG,getString(R.string.webview)+"?lecid="+i);
         }
+        else if(lecture==2)
+        {
+            webview.loadData(filename, "text/html", "UTF-8");
+        }
         else
         {
             webview.getSettings().setJavaScriptEnabled(true);
             webview.loadUrl(getString(R.string.googledocs)+getString(R.string.docs)+"/"+filename);
-            Toast.makeText(getActivity(),getString(R.string.googledocs)+getString(R.string.docs)+"/"+filename,Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(),getString(R.string.googledocs)+getString(R.string.docs)+"/"+filename,Toast.LENGTH_LONG).show();
 
             Log.v(LOG_TAG,getString(R.string.googledocs)+getString(R.string.docs)+"/"+filename);
         }
